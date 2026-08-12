@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ui:UXML
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ui="UnityEngine.UIElements"
-    xmlns:uie="UnityEditor.UIElements"
-    xsi:noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd"
->
-    
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="ButtonContainer" style="flex-grow: 1; position: relative; top: 0%; right: 0%; left: 0%; bottom: 0%; flex-basis: 0; width: 50%; height: 100%; flex-shrink: 1; padding-top: 100px; padding-right: 50px; padding-left: 50px; padding-bottom: 50px; justify-content: flex-start; align-items: center; align-self: flex-start; align-content: flex-start; flex-direction: column; flex-wrap: nowrap; -unity-font-definition: url(&quot;project://database/Library/unity%20default%20resources?fileID=10102&amp;guid=0000000000000000e000000000000000&amp;type=0#LegacyRuntime&quot;); font-size: 60px;">
+        <ui:Label text="Trivia Game" name="TitleTXT" triple-click-selects-line="false" language-direction="Inherit" style="padding-top: 0; padding-right: 0; padding-left: 0; padding-bottom: 150px; margin-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; font-size: 100px;"/>
+        <ui:Button text="Queue Up" name="QueueUpBTN"/>
+        <ui:Button text="Credits" name="CreditsBTN"/>
+        <ui:Button text="Quit" name="QuitBTN"/>
+    </ui:VisualElement>
 </ui:UXML>
