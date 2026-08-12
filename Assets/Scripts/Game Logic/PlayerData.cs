@@ -1,6 +1,6 @@
 namespace Game_Logic
 {
-    public class PlayerData
+    public struct PlayerData
     {
         public string Name;
         public int Rating;

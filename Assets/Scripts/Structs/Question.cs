@@ -4,13 +4,13 @@ namespace Structs
     {
         public string QuestionText;
         public string[] Options;
-        public int CorrectOptionIndex;
+        public int CorrectAnswerIndex;
 
-        public Question(string questionText, string[] options, int correctOptionIndex)
+        public Question(string questionText, string[] options, int correctAnswerIndex)
         {
             QuestionText = questionText;
             Options = options;
-            CorrectOptionIndex = correctOptionIndex;
+            CorrectAnswerIndex = correctAnswerIndex;
         }
     }
 }
