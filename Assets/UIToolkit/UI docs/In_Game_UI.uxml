@@ -7,7 +7,7 @@
         <ui:Button text="A4" name="Answer4BTN" style="font-size: 60px; width: 75%; align-self: center;"/>
     </ui:VisualElement>
     <ui:VisualElement name="GeneralUIContainer" style="flex-grow: 1; padding-right: 400px; padding-left: 400px; padding-top: 100px; padding-bottom: 50px;">
-        <ui:Button text="Submit" name="Confirm" style="font-size: 60px;"/>
-        <ui:ProgressBar value="0.5" title="Timer" name="Timer" high-value="1" style="font-size: 60px; height: auto; flex-shrink: 0; flex-basis: 50px; flex-grow: 1; align-self: stretch; align-content: flex-end; justify-content: center;"/>
+        <ui:Button text="Submit" name="ConfirmBTN" style="font-size: 60px;"/>
+        <ui:ProgressBar value="0.5" title="Timer" name="TimerPB" high-value="1" style="font-size: 60px; height: auto; flex-shrink: 0; flex-basis: 50px; flex-grow: 1; align-self: stretch; align-content: flex-end; justify-content: center;"/>
     </ui:VisualElement>
 </ui:UXML>
