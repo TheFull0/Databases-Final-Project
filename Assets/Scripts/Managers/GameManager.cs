@@ -77,7 +77,7 @@ namespace Managers
 
             _currentQuestion = _questions[_currentQuestionIndex];
             EventBus.Raise(new NewQuestionLoadedEvent(_currentQuestion));
-            stopWatch.Start(gameData.TimePerQuestion);
+            stopWatch.StartClock(gameData.TimePerQuestion);
             
         }
 

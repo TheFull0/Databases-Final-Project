@@ -28,9 +28,9 @@ namespace Game_Logic
             }
         }
 
-        public void Start(float time)
+        public void StartClock(float timeToTime)
         {
-            _maxTime = time;
+            _maxTime = timeToTime;
             _currentTime = 0f;
             _isRunning = true;
         }
