@@ -13,7 +13,7 @@ namespace Structs
         {
             AvgAnswerTime = avgAnswerTime;
             QuestionResults = questionResults;
-            CorrectAnswers = 0;
+            CorrectAnswers = correctAnswers;
         }
     }
 }

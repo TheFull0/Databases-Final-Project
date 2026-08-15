@@ -1,5 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading;
 using Events;
 using Game_Logic;
 using ScriptableObjects.Classes;
@@ -21,21 +25,33 @@ namespace Managers
         private int _currentQuestionIndex = -1;
         private bool _questionsLoaded;
 
-        private async void Awake()  
+        private async void Awake()
         {
-            var questions = await ServerFunctions.GetRandomQuestions(gameData.QuestionCount);
-            
-            if (questions == null)
+            try
             {
-                Debug.LogError("[GameManager] Failed to retrieve questions from the server.");
-                return;
-            }
-
-            CopyQuestionsToList(questions);
-
-            SubscribeToEvents();
+                SubscribeToEvents();
             
-            StartGame();
+                //TODO Make a name-entry UI and raise some event or add it straight to gamemanager and read the value when submit clicked or something
+                const string playerName = "";
+            
+                //TODO raise some "waiting for opponent" UI event here or show it straight from uimanager
+                await ServerFunctions.JoinAndWaitForOpponent(playerName, CancellationToken.None);
+            
+                var questions = await ServerFunctions.GetRandomQuestions(gameData.QuestionCount);
+            
+                if (questions == null)
+                {
+                    Debug.LogError("[GameManager] Failed to retrieve questions from the server.");
+                    return;
+                }
+
+                CopyQuestionsToList(questions);
+                StartGame();
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+            }
         }
 
         private void StartGame()
@@ -53,11 +69,12 @@ namespace Managers
             _questionsLoaded = true;
         }
 
-        public void InitializeGame(PlayerData enemyPlayerData)
+        // there is no need for this, there's no opponent identity available before the match ends so this hook doesn't have anything to be called with.
+        /*public void InitializeGame(PlayerData enemyPlayerData)
         {
             _playerData = enemyPlayerData;
             _currentQuestionIndex = -1;
-        }
+        }*/
 
         private void LoadNextQuestion()
         {
@@ -114,9 +131,38 @@ namespace Managers
             EventBus.Raise(new QuestionUnansweredEvent { AnswerIndex = _currentQuestion.CorrectAnswerIndex });
         }
 
-        private void EndGame()
+        private async void EndGame()
         {
-            // Handle end of game logic here
+            try
+            {
+                var correct = _questionResults.Count(r => r.WasAnsweredCorrectly);
+                var totalTime = _questionResults.Sum(r => r.TimeTaken);
+
+                // raise a "waiting for opponent to finish" UI event here
+                await ServerFunctions.SubmitMatchResult(correct, totalTime);
+                
+                //TODO Make a "Waiting for opponent to finish" UI and raise some event
+                var outcome = await ServerFunctions.WaitForMatchOutcome(CancellationToken.None);
+
+                if (outcome.HasValue)
+                {
+                    // Success! Raise a "show winner screen" event here
+                    // you have a tie or a winner if there's a tie the winners id will be 0. but isTie will be true
+                }
+                else
+                {
+                    //The polling loop encountered a network error and returned null
+                    //Lost connection to the server while waiting for opponent.
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                Debug.Log($"[{GetType().Name}] Match polling was canceled because the object was destroyed.");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[{GetType().Name}] An unexpected error occurred: {e.Message}");
+            }
         }
 
 
