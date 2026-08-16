@@ -142,6 +142,7 @@ namespace Managers
                 Debug.LogError($"[ServerFunctions] GetRandomQuestions failed: {req.error}");
                 return null;
             }
+            Debug.Log($"[ServerFunctions] GetRandomQuestions response - Success");
             
             var wrapped = "{\"items\":" + req.downloadHandler.text + "}";
             var all = JsonUtility.FromJson<QuestionListWrapper>(wrapped).items;

@@ -12,7 +12,7 @@
                 <ui:Label text="VS" name="VS" style="font-size: 70px;"/>
                 <ui:Label text="Waiting For Other Player..." name="OtherPlayerName" style="font-size: 70px;"/>
             </ui:VisualElement>
-            <ui:Button text="Cancel Queue" name="CencelQueueButton" style="font-size: 60px; width: 75%; align-self: center;"/>
+            <ui:Button text="Cancel Queue" name="CancelQueueButton" style="font-size: 60px; width: 75%; align-self: center;"/>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

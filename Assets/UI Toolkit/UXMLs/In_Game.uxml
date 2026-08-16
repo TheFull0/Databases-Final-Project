@@ -1,5 +1,5 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UIToolkit/Uss%20files/ButtonStyleUSS.uss?fileID=7433441132597879392&amp;guid=a3883a5239cce704e9be68fa793f7e8c&amp;type=3#ButtonStyleUSS"/>
+    <Style src="project://database/Assets/UI%20Toolkit/Uss%20files/ButtonStyleUSS.uss?fileID=7433441132597879392&amp;guid=a3883a5239cce704e9be68fa793f7e8c&amp;type=3#ButtonStyleUSS"/>
     <ui:ProgressBar value="0.5" title="Timer" name="TimerPB" high-value="1" style="font-size: 60px; height: auto; flex-shrink: 0; flex-basis: 50px; flex-grow: 1; align-self: stretch; align-content: flex-end; justify-content: center;"/>
     <ui:VisualElement name="QuestionContainer" style="flex-grow: 1; color: rgb(56, 56, 56); padding-right: 150px; padding-left: 150px; padding-top: 100px;">
         <ui:Label text="Question" name="QuestionTXT" style="font-size: 60px; -unity-text-align: upper-center;"/>
@@ -10,7 +10,7 @@
             </ui:VisualElement>
             <ui:VisualElement style="flex-direction: row; justify-content: center;">
                 <ui:Button text="A3" name="Answer3BTN" style="font-size: 60px; -unity-text-align: middle-center; width: 50%;"/>
-                <ui:Button text="A4" name="Answer4BTN" style="font-size: 60px; width: 50%;"/>
+                <ui:Button text="A4" name="Answer4BT" style="font-size: 60px; width: 50%;"/>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

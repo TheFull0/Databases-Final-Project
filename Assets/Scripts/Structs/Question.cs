@@ -12,5 +12,10 @@ namespace Structs
             Options = options;
             CorrectAnswerIndex = correctAnswerIndex;
         }
+
+        public override string ToString()
+        {
+            return $"Question: {QuestionText}, Options: [{string.Join(", ", Options)}], CorrectAnswerIndex: {CorrectAnswerIndex}";
+        }
     }
 }

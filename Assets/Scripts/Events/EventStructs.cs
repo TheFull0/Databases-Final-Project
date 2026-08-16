@@ -40,4 +40,27 @@ namespace Events
     }
 
     public struct TimerFinishedEvent {}
+
+    public struct MainMenuQueueUpClickedEvent { }
+
+    public struct MainMenuQueueCanceledEvent { }
+
+    public struct MainMenuCreditsClickedEvent { }
+
+    public struct MainMenuQuitClickedEvent { }
+
+    public struct MainMenuQueueStateChangedEvent
+    {
+        public bool IsInQueue;
+    }
+
+    public struct MainMenuPlayerNameUpdatedEvent
+    {
+        public string PlayerName;
+    }
+
+    public struct MainMenuQueueStatusUpdatedEvent
+    {
+        public string StatusText;
+    }
 }

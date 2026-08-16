@@ -24,19 +24,33 @@ namespace Managers
         private Question _currentQuestion;
         private int _currentQuestionIndex = -1;
         private bool _questionsLoaded;
+        private CancellationTokenSource _matchmakingCancellationTokenSource;
+        
+        public bool IsAbortable { get; private set; }
 
         private async void Awake()
         {
+            _matchmakingCancellationTokenSource = new CancellationTokenSource();
+            var matchmakingToken = _matchmakingCancellationTokenSource.Token;
+            IsAbortable = true;
+
             try
             {
                 SubscribeToEvents();
             
                 //TODO Make a name-entry UI and raise some event or add it straight to gamemanager and read the value when submit clicked or something
                 const string playerName = "";
-            
+             
                 //TODO raise some "waiting for opponent" UI event here or show it straight from uimanager
-                await ServerFunctions.JoinAndWaitForOpponent(playerName, CancellationToken.None);
-            
+                await ServerFunctions.JoinAndWaitForOpponent(playerName, matchmakingToken);
+
+                if (matchmakingToken.IsCancellationRequested)
+                {
+                    return;
+                }
+
+                IsAbortable = false;
+             
                 var questions = await ServerFunctions.GetRandomQuestions(gameData.QuestionCount);
             
                 if (questions == null)
@@ -48,6 +62,10 @@ namespace Managers
                 CopyQuestionsToList(questions);
                 StartGame();
             }
+            catch (OperationCanceledException)
+            {
+                Debug.Log($"[{GetType().Name}] Matchmaking queue was canceled.");
+            }
             catch (Exception e)
             {
                 Debug.LogException(e);
@@ -56,8 +74,17 @@ namespace Managers
 
         private void StartGame()
         {
+            IsAbortable = false;
             EventBus.Raise(new GameStartedEvent { PlayerData = _playerData });
             LoadNextQuestion();
+        }
+
+        public void CancelMatchmaking()
+        {
+            if (!IsAbortable) return;
+
+            IsAbortable = false;
+            _matchmakingCancellationTokenSource?.Cancel();
         }
 
         private void CopyQuestionsToList(IEnumerable<Question> questions)
@@ -65,6 +92,7 @@ namespace Managers
             foreach (var question in questions)
             {
                 _questions.Add(question);
+                Debug.Log($"[{GetType().Name}] Question: {question}");
             }
             _questionsLoaded = true;
         }
@@ -168,6 +196,10 @@ namespace Managers
 
         private void OnDestroy()
         {
+            IsAbortable = false;
+            _matchmakingCancellationTokenSource?.Cancel();
+            _matchmakingCancellationTokenSource?.Dispose();
+            _matchmakingCancellationTokenSource = null;
             UnsubscribeAll();
         }
         
