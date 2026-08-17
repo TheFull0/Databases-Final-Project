@@ -38,6 +38,7 @@ public class UIManager : MonoBehaviour
     private void OnGameStarted(GameStartedEvent obj)
     {
         SetCurrentScreen(UIScreenId.InGame);
+        
     }
 
     private void RegisterScreens()

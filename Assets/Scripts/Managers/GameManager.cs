@@ -20,6 +20,8 @@ namespace Managers
         private List<Question> _questions = new List<Question>();
         private List<QuestionResult> _questionResults = new List<QuestionResult>();
         
+        private string _currentPlayerName;
+        
         private Question _currentQuestion;
         private int _currentQuestionIndex = -1;
         private bool _questionsLoaded;
@@ -32,12 +34,13 @@ namespace Managers
             _matchmakingCancellationTokenSource = new CancellationTokenSource();
             var matchmakingToken = _matchmakingCancellationTokenSource.Token;
             IsAbortable = true;
-
+            _currentPlayerName = playerName;
+            
             try
             {
                 SubscribeToEvents();
                 
-                await ServerFunctions.JoinAndWaitForOpponent(playerName, matchmakingToken);
+                await ServerFunctions.JoinAndWaitForOpponent(_currentPlayerName, matchmakingToken);
 
                 if (matchmakingToken.IsCancellationRequested)
                 {
@@ -91,13 +94,6 @@ namespace Managers
             }
             _questionsLoaded = true;
         }
-
-        // there is no need for this, there's no opponent identity available before the match ends so this hook doesn't have anything to be called with.
-        /*public void InitializeGame(PlayerData enemyPlayerData)
-        {
-            _playerData = enemyPlayerData;
-            _currentQuestionIndex = -1;
-        }*/
 
         private void LoadNextQuestion()
         {
@@ -169,8 +165,9 @@ namespace Managers
 
                 if (outcome.HasValue)
                 {
-                    // Success! Raise a "show winner screen" event here
-                    // you have a tie or a winner if there's a tie the winners id will be 0. but isTie will be true
+                    EventBus.Raise(outcome.Value.IsWin
+                        ? new MatchEndedEvent($"{_currentPlayerName}, You")
+                        : new MatchEndedEvent($"{ServerFunctions.OpponentName}"));
                 }
                 else
                 {

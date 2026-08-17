@@ -36,6 +36,16 @@ namespace Events
         public int AnswerIndex;
     }
 
+    public struct MatchEndedEvent
+    {
+        public string PlayerName;
+
+        public MatchEndedEvent(string playerName)
+        {
+            PlayerName = playerName;
+        }
+    }
+
     public struct TimerFinishedEvent {}
 
     public struct MainMenuQueueUpClickedEvent { }
