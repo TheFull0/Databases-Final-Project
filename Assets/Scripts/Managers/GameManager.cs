@@ -74,6 +74,7 @@ namespace Managers
         private void StartGame()
         {
             IsAbortable = false;
+            EventBus.Raise(new GameStartedEvent());
             LoadNextQuestion();
         }
 
