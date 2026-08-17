@@ -119,6 +119,10 @@ MonoBehaviour:
     PresenterType: 0
     View: {fileID: 7575674699351033156}
     ShowOnStartup: 1
+  - ScreenId: 1
+    PresenterType: 1
+    View: {fileID: 7784569023329359287}
+    ShowOnStartup: 0
 --- !u!1001 &7839518514312098362
 PrefabInstance:
   m_ObjectHideFlags: 0

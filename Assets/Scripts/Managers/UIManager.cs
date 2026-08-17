@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,11 +13,17 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
+        StartCoroutine(AwakeRoutine());
+    }
+
+    private IEnumerator AwakeRoutine()
+    {
+        yield return null; // Wait for other Awake methods to complete before checking for duplicates.
+        if (Instance && Instance != this)
         {
             Debug.LogError("[UIManager] Duplicate instance detected. Destroying the new one.");
             Destroy(this.gameObject);
-            return;
+            yield break;
         }
         Instance = this;
         DontDestroyOnLoad(this.gameObject);
