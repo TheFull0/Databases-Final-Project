@@ -12,10 +12,7 @@ namespace Events
         public int AnswerIndex;
     }
     
-    public struct GameStartedEvent
-    {
-        public PlayerData PlayerData;
-    }
+    public struct GameStartedEvent { }
 
     public struct QuestionAnsweredCorrectlyEvent {}
 

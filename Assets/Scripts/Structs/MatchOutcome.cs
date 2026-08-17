@@ -11,5 +11,7 @@ namespace Structs
         public int MyCorrectAnswers;
         public int OpponentCorrectAnswers;
         public float OpponentTotalAnswerTime; // seconds
+        public int MyEloChange;
+        public int MyNewElo;
     }
 }

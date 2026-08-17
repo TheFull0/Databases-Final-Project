@@ -20,7 +20,6 @@ namespace Managers
         private List<Question> _questions = new List<Question>();
         private List<QuestionResult> _questionResults = new List<QuestionResult>();
         
-        private PlayerData _playerData;
         private Question _currentQuestion;
         private int _currentQuestionIndex = -1;
         private bool _questionsLoaded;
@@ -75,7 +74,6 @@ namespace Managers
         private void StartGame()
         {
             IsAbortable = false;
-            EventBus.Raise(new GameStartedEvent { PlayerData = _playerData });
             LoadNextQuestion();
         }
 
