@@ -17,6 +17,7 @@ namespace UI.MainMenu
         private VisualElement _queueScreen;
 
         private Label _playerNameLabel;
+        private Label _playerStatsLabel;
         private Label _queueStatusLabel;
 
         private Button _queueUpButton;
@@ -37,6 +38,7 @@ namespace UI.MainMenu
 
             SetQueueVisible(model.IsQueueVisible);
             SetPlayerName(model.PlayerName);
+            SetPlayerStatsText(model.PlayerStatsText);
             SetQueueStatus(model.QueueStatusText);
         }
 
@@ -46,7 +48,8 @@ namespace UI.MainMenu
             _buttonContainer = Root.Q<VisualElement>(UI_Main_Menu.ButtonContainer);
             _queueScreen = Root.Q<VisualElement>(UI_Main_Menu.QueueScreen);
 
-            _playerNameLabel = Root.Q<Label>(UI_Main_Menu.PlayerName);
+            _playerNameLabel = Root.Q<Label>(UI_Main_Menu.PlayerNameTXT);
+            _playerStatsLabel = Root.Q<Label>(UI_Main_Menu.PlayerStatsTXT);
             _queueStatusLabel = Root.Q<Label>(UI_Main_Menu.OtherPlayerName);
 
             _queueUpButton = Root.Q<Button>(UI_Main_Menu.QueueUpBTN);
@@ -108,6 +111,12 @@ namespace UI.MainMenu
         {
             if (_queueStatusLabel != null)
                 _queueStatusLabel.text = statusText;
+        }
+        
+        private void SetPlayerStatsText(string playerStatsText)
+        {
+            if (_playerStatsLabel != null)
+                _playerStatsLabel.text = string.IsNullOrWhiteSpace(playerStatsText) ? "Loading stats..." : playerStatsText;
         }
 
         private void HandleQueueUpClicked()

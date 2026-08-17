@@ -1,5 +1,7 @@
 using Base_Classes;
+using BootStraps;
 using Events;
+using Managers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -33,6 +35,7 @@ namespace UI.MainMenu
             EventBus.Subscribe<MainMenuQueueStateChangedEvent>(OnQueueStateChanged);
             EventBus.Subscribe<MainMenuPlayerNameUpdatedEvent>(OnPlayerNameUpdated);
             EventBus.Subscribe<MainMenuQueueStatusUpdatedEvent>(OnQueueStatusUpdated);
+            EventBus.Subscribe<ChooseNameConfirmedEvent>(OnChooseNameConfirmed);
 
             _isSubscribed = true;
             InitializeView();
@@ -50,6 +53,7 @@ namespace UI.MainMenu
             EventBus.Unsubscribe<MainMenuQueueStateChangedEvent>(OnQueueStateChanged);
             EventBus.Unsubscribe<MainMenuPlayerNameUpdatedEvent>(OnPlayerNameUpdated);
             EventBus.Unsubscribe<MainMenuQueueStatusUpdatedEvent>(OnQueueStatusUpdated);
+            EventBus.Unsubscribe<ChooseNameConfirmedEvent>(OnChooseNameConfirmed);
 
             _isSubscribed = false;
         }
@@ -58,6 +62,7 @@ namespace UI.MainMenu
         {
             // Main menu starts with the queue panel hidden.
             _model.SetQueueVisible(false);
+            RefreshPlayerIdentityFromCaches();
             _view.Render(_model);
         }
 
@@ -101,7 +106,7 @@ namespace UI.MainMenu
 
         private void OnPlayerNameUpdated(MainMenuPlayerNameUpdatedEvent e)
         {
-            _model.SetPlayerName(e.PlayerName);
+            RefreshPlayerIdentityFromCaches();
             _view.Render(_model);
         }
 
@@ -109,6 +114,29 @@ namespace UI.MainMenu
         {
             _model.SetQueueStatus(e.StatusText);
             _view.Render(_model);
+        }
+
+        private void OnChooseNameConfirmed(ChooseNameConfirmedEvent _)
+        {
+            RefreshPlayerIdentityFromCaches();
+            _view.Render(_model);
+        }
+
+        private void RefreshPlayerIdentityFromCaches()
+        {
+            var cachedName = QueueManager.Instance != null ? QueueManager.Instance.PlayerName : string.Empty;
+            _model.SetPlayerName(cachedName);
+
+            if (ServerFunctions.PlayerId > 0 &&
+                ServerFunctions.MyElo > 0 &&
+                !string.IsNullOrWhiteSpace(cachedName))
+            {
+                _model.SetPlayerStatsText($"{ServerFunctions.PlayerId} - {cachedName} - {ServerFunctions.MyElo}");
+            }
+            else
+            {
+                _model.SetPlayerStatsText("Loading stats...");
+            }
         }
     }
 }

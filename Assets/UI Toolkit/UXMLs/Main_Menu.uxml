@@ -1,14 +1,15 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:VisualElement name="MenuContainer" style="flex-grow: 1; flex-direction: row;">
-        <ui:VisualElement name="ButtonContainer" style="flex-grow: 1; position: relative; top: 0%; right: 0%; left: 0%; bottom: 0%; flex-basis: 0; width: 50%; height: 100%; flex-shrink: initial; padding-top: 100px; padding-right: 50px; padding-left: 50px; padding-bottom: 50px; justify-content: flex-start; align-items: stretch; align-self: flex-start; align-content: flex-start; flex-direction: column; flex-wrap: nowrap; -unity-font-definition: url(&quot;project://database/Library/unity%20default%20resources?fileID=10102&amp;guid=0000000000000000e000000000000000&amp;type=0#LegacyRuntime&quot;); font-size: 60px; max-width: 50%;">
+        <ui:VisualElement name="ButtonContainer" style="flex-grow: 1; position: relative; top: 0%; right: 0%; left: 0%; bottom: 0%; flex-basis: 0; width: 50%; height: 100%; flex-shrink: initial; padding-top: 100px; padding-right: 50px; padding-left: 50px; padding-bottom: 50px; justify-content: space-evenly; align-items: stretch; align-self: flex-start; align-content: flex-start; flex-direction: column; flex-wrap: nowrap; -unity-font-definition: url(&quot;project://database/Library/unity%20default%20resources?fileID=10102&amp;guid=0000000000000000e000000000000000&amp;type=0#LegacyRuntime&quot;); font-size: 60px; max-width: 50%;">
             <ui:Label text="Trivia Game" name="TitleTXT" triple-click-selects-line="false" language-direction="Inherit" style="padding-top: 75px; padding-right: 0; padding-left: 0; padding-bottom: 75px; margin-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; font-size: 100px; align-items: stretch; flex-shrink: 0; flex-direction: column; width: auto; -unity-text-align: middle-center; white-space: nowrap; -unity-font-style: bold; text-overflow: clip;"/>
             <ui:Button text="Queue Up" name="QueueUpBTN" style="width: 75%; height: auto; align-self: center;"/>
             <ui:Button text="Credits" name="CreditsBTN" style="width: 75%; align-self: center;"/>
             <ui:Button text="Quit" name="QuitBTN" style="width: 75%; align-items: stretch; align-self: center;"/>
+            <ui:Label text="Label" name="PlayerStatsTXT" style="-unity-text-align: upper-center; font-size: 40px;"/>
         </ui:VisualElement>
         <ui:VisualElement name="QueueScreen" style="flex-grow: 1; width: 50%; flex-shrink: 1; padding-top: 100px; padding-bottom: 100px; padding-left: 50px; padding-right: 50px; max-width: 50%;">
             <ui:VisualElement name="LoadingWheel" style="flex-grow: 1; flex-direction: column; flex-shrink: 1; align-items: center; justify-content: center;">
-                <ui:Label text="NateHiggers" name="PlayerName" style="font-size: 70px;"/>
+                <ui:Label text="BearishMarket523" name="PlayerNameTXT" style="font-size: 70px;"/>
                 <ui:Label text="VS" name="VS" style="font-size: 70px;"/>
                 <ui:Label text="Waiting For Other Player..." name="OtherPlayerName" style="font-size: 70px;"/>
             </ui:VisualElement>

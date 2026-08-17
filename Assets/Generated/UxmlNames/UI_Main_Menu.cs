@@ -1,6 +1,6 @@
 // AUTO-GENERATED — DO NOT EDIT
 // Source : Assets/UI Toolkit/UXMLs/Main_Menu.uxml
-// Updated: 2026-08-17 22:28 UTC
+// Updated: 2026-08-17 23:09 UTC
 
 using System.Collections.Generic;
 
@@ -12,9 +12,10 @@ public enum UI_Main_Menu
     QueueUpBTN,
     CreditsBTN,
     QuitBTN,
+    PlayerStatsTXT,
     QueueScreen,
     LoadingWheel,
-    PlayerName,
+    PlayerNameTXT,
     VS,
     OtherPlayerName,
     CancelQueueButton,
@@ -31,9 +32,10 @@ internal static class UI_Main_Menu_Map
             { UI_Main_Menu.QueueUpBTN, "QueueUpBTN" },
             { UI_Main_Menu.CreditsBTN, "CreditsBTN" },
             { UI_Main_Menu.QuitBTN, "QuitBTN" },
+            { UI_Main_Menu.PlayerStatsTXT, "PlayerStatsTXT" },
             { UI_Main_Menu.QueueScreen, "QueueScreen" },
             { UI_Main_Menu.LoadingWheel, "LoadingWheel" },
-            { UI_Main_Menu.PlayerName, "PlayerName" },
+            { UI_Main_Menu.PlayerNameTXT, "PlayerNameTXT" },
             { UI_Main_Menu.VS, "VS" },
             { UI_Main_Menu.OtherPlayerName, "OtherPlayerName" },
             { UI_Main_Menu.CancelQueueButton, "CancelQueueButton" },

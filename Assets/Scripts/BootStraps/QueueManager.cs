@@ -7,15 +7,24 @@ namespace BootStraps
 {
     public class QueueManager : MonoBehaviour
     {
-        [SerializeField] private QueueManager Instance;
+        public static QueueManager Instance { get; private set; }
         [SerializeField] private GameManager gameManagerPrefab;
         private GameManager _gameManagerInstance;
         private bool _initialized;
 
         private string _playerName;
+        public string PlayerName => _playerName;
         
         private void Awake()
         {
+            if (Instance && Instance != this)
+            {
+                Debug.LogError("[QueueManager] Duplicate instance detected. Destroying the new one.");
+                Destroy(this.gameObject);
+                return;
+            }
+            
+            Instance = this;
             EventBus.Subscribe<MainMenuQueueUpClickedEvent>(HandleMainMenuQueueUpClicked);
             EventBus.Subscribe<MainMenuQueueCanceledEvent>(HandleMainMenuQueueCanceled);
             EventBus.Subscribe<ChooseNameConfirmedEvent>(OnNameChosen);
@@ -58,6 +67,9 @@ namespace BootStraps
 
         private void OnDestroy()
         {
+            if (Instance == this)
+                Instance = null;
+            
             EventBus.Unsubscribe<MainMenuQueueUpClickedEvent>(HandleMainMenuQueueUpClicked);
             EventBus.Unsubscribe<MainMenuQueueCanceledEvent>(HandleMainMenuQueueCanceled);
             EventBus.Unsubscribe<ChooseNameConfirmedEvent>(OnNameChosen);

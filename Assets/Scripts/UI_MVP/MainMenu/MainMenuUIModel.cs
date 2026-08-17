@@ -7,6 +7,7 @@ namespace UI.MainMenu
     {
         public bool IsQueueVisible { get; private set; }
         public string PlayerName { get; private set; } = string.Empty;
+        public string PlayerStatsText { get; private set; } = "Loading stats...";
         public string QueueStatusText { get; private set; } = "Waiting For Other Player...";
 
         public void SetQueueVisible(bool isVisible)
@@ -17,6 +18,11 @@ namespace UI.MainMenu
         public void SetPlayerName(string playerName)
         {
             PlayerName = playerName ?? string.Empty;
+        }
+        
+        public void SetPlayerStatsText(string playerStatsText)
+        {
+            PlayerStatsText = playerStatsText ?? string.Empty;
         }
 
         public void SetQueueStatus(string queueStatusText)
