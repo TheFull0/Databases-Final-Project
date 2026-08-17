@@ -27,7 +27,7 @@ namespace Managers
         
         public bool IsAbortable { get; private set; }
 
-        private async void Run(string playerName)
+        public async void Run(string playerName)
         {
             _matchmakingCancellationTokenSource = new CancellationTokenSource();
             var matchmakingToken = _matchmakingCancellationTokenSource.Token;

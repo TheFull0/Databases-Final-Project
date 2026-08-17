@@ -11,14 +11,19 @@ namespace BootStraps
         [SerializeField] private GameManager gameManagerPrefab;
         private GameManager _gameManagerInstance;
         private bool _initialized;
-        
-        private HashSet<string> _queueNames;
 
+        private string _playerName;
         
         private void Awake()
         {
             EventBus.Subscribe<MainMenuQueueUpClickedEvent>(HandleMainMenuQueueUpClicked);
             EventBus.Subscribe<MainMenuQueueCanceledEvent>(HandleMainMenuQueueCanceled);
+            EventBus.Subscribe<ChooseNameConfirmedEvent>(OnNameChosen);
+        }
+
+        private void OnNameChosen(ChooseNameConfirmedEvent e)
+        {
+            _playerName = e.ConfirmedName;
         }
 
         private void HandleMainMenuQueueCanceled(MainMenuQueueCanceledEvent obj)
@@ -39,12 +44,14 @@ namespace BootStraps
             _gameManagerInstance = Instantiate(gameManagerPrefab);
             DontDestroyOnLoad(_gameManagerInstance.gameObject);
             _initialized = true;
+            _gameManagerInstance.Run(_playerName);
         }
 
         private void OnDestroy()
         {
             EventBus.Unsubscribe<MainMenuQueueUpClickedEvent>(HandleMainMenuQueueUpClicked);
             EventBus.Unsubscribe<MainMenuQueueCanceledEvent>(HandleMainMenuQueueCanceled);
+            EventBus.Unsubscribe<ChooseNameConfirmedEvent>(OnNameChosen);
         }
     }
 }

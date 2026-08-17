@@ -122,8 +122,14 @@ public class UIManager : MonoBehaviour
     private void SubscribeSelfToEvents()
     {
         EventBus.Subscribe<GameStartedEvent>(OnGameStarted);
+        EventBus.Subscribe<ChooseNameConfirmedEvent>(OnConfirmedName);
     }
-    
+
+    private void OnConfirmedName(ChooseNameConfirmedEvent obj)
+    {
+        SetCurrentScreen(UIScreenId.MainMenu);
+    }
+
     private void OnDestroy()
     {
         UnsubscribeSelf();

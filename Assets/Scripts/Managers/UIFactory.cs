@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Base_Classes;
+using UI_MVP.ChooseName;
+using UI_MVP.ChooseName.UI_MVP.ChooseName;
 using UI.InGame;
 using UI.MainMenu;
 using UnityEngine;
@@ -9,13 +11,15 @@ using UnityEngine;
 public enum UIScreenId
 {
     MainMenu,
-    InGame
+    InGame,
+    ChooseName
 }
 
 public enum UIPresenterType
 {
     MainMenu,
-    InGame
+    InGame,
+    ChooseName
 }
 
 [Serializable]
@@ -50,8 +54,10 @@ public static class UIFactory
         new()
         {
             { UIPresenterType.MainMenu, CreateMainMenuPresenter },
-            { UIPresenterType.InGame, CreateInGamePresenter }
+            { UIPresenterType.InGame, CreateInGamePresenter },
+            { UIPresenterType.ChooseName, CreateChooseNamePresenter}
         };
+
 
     public static List<UIScreenRegistration> CreateRegistrations(IEnumerable<UIPresenterBinding> bindings)
     {
@@ -59,7 +65,7 @@ public static class UIFactory
 
         foreach (var binding in bindings)
         {
-            if (binding.View == null)
+            if (!binding.View)
             {
                 Debug.LogError($"[UIFactory] Missing view for screen {binding.ScreenId}.");
                 continue;
@@ -83,7 +89,7 @@ public static class UIFactory
     private static IPresenter CreateMainMenuPresenter(UIPresenterBinding binding)
     {
         var mainMenuView = binding.View as MainMenuUIView;
-        if (mainMenuView == null)
+        if (!mainMenuView)
         {
             Debug.LogError("[UIFactory] MainMenu presenter requires MainMenuUIView.");
             return null;
@@ -98,7 +104,7 @@ public static class UIFactory
     private static IPresenter CreateInGamePresenter(UIPresenterBinding binding)
     {
         var inGameView = binding.View as InGameUIView;
-        if (inGameView == null)
+        if (!inGameView)
         {
             Debug.LogError("[UIFactory] InGame presenter requires InGameUIView.");
             return null;
@@ -107,6 +113,21 @@ public static class UIFactory
         return new InGameUIPresenter(
             new InGameUIModel(),
             inGameView
+        );
+    }
+
+    private static IPresenter CreateChooseNamePresenter(UIPresenterBinding binding)
+    {
+        var chooseNameView = binding.View as ChooseNameUIView;
+        if (!chooseNameView)
+        {
+            Debug.LogError("[UIFactory] InGame presenter requires InGameUIView.");
+            return null;
+        }
+
+        return new ChooseNameUIPresenter(
+            new ChooseNameUIModel(),
+            chooseNameView
         );
     }
 }

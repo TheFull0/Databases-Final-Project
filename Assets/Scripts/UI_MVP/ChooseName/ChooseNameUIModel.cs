@@ -1,14 +1,17 @@
 using System;
 using System.Collections;
 using Base_Classes;
+using Events;
 using UnityEngine;
 using UnityEngine.Networking;
 
 namespace UI_MVP.ChooseName
 {
-    public class ChooseNameUIModel: ModelBase
+    public class ChooseNameUIModel : ModelBase
     {
         private const string RandomNameApi = "https://randomuser.me/api/?inc=login";
+        private const string PlayerNamePrefKey = "PlayerName";
+        private const int MaxNameLength = 32;
 
         //Fallback
         private static readonly string[] RandomAdjectives =
@@ -16,24 +19,47 @@ namespace UI_MVP.ChooseName
         private static readonly string[] RandomNouns =
             { "Wolf", "Falcon", "Ranger", "Viper", "Knight", "Ghost", "Comet", "Tiger", "Raven", "Blade" };
 
+        public string ConfirmedName { get; private set; } = string.Empty;
+
         public void SaveConfirmedName(string name)
         {
-            
+            ConfirmedName = name ?? string.Empty;
+
+            PlayerPrefs.SetString(PlayerNamePrefKey, ConfirmedName);
+            PlayerPrefs.Save();
+
+            EventBus.Raise(new ChooseNameConfirmedEvent(ConfirmedName));
         }
 
         public bool TryApplyConfirmedName(string confirmedName)
         {
-            
+            if (string.IsNullOrWhiteSpace(confirmedName))
+                return false;
+
+            var trimmedName = confirmedName.Trim();
+            if (trimmedName.Length > MaxNameLength)
+                trimmedName = trimmedName.Substring(0, MaxNameLength);
+
+            if (IsNameAlreadyTaken(trimmedName))
+                return false;
+
+            SaveConfirmedName(trimmedName);
+            return true;
         }
 
         public string GetCurrentNetworkDisplayName()
         {
-            
+            if (!string.IsNullOrEmpty(ConfirmedName))
+                return ConfirmedName;
+
+            return PlayerPrefs.GetString(PlayerNamePrefKey, string.Empty);
         }
 
         public bool IsNameAlreadyTaken(string name)
         {
-            
+            // TODO: wire this up to the real matchmaking/network player registry
+            // once one exists. Until then, no name is considered taken.
+            return false;
         }
 
         public IEnumerator FetchRandomNameRoutine(Action<string> onComplete)
@@ -45,13 +71,13 @@ namespace UI_MVP.ChooseName
             if (req.result == UnityWebRequest.Result.Success)
                 name = ParseUsername(req.downloadHandler.text);
             else
-                Debug.LogWarning($"[NameEntryUIModel] Random name request failed ({req.result}); using local fallback.");
+                Debug.LogWarning($"[ChooseNameUIModel] Random name request failed ({req.result}); using local fallback.");
 
             if (string.IsNullOrEmpty(name))
                 name = LocalRandomName();
 
-            if (name.Length > 32)
-                name = name.Substring(0, 32);
+            if (name.Length > MaxNameLength)
+                name = name.Substring(0, MaxNameLength);
 
             if (IsNameAlreadyTaken(name))
                 name = LocalRandomName();
@@ -69,7 +95,7 @@ namespace UI_MVP.ChooseName
             }
             catch (Exception e)
             {
-                Debug.LogWarning($"[NameEntryUIModel] Failed to parse random name: {e.Message}");
+                Debug.LogWarning($"[ChooseNameUIModel] Failed to parse random name: {e.Message}");
             }
             return null;
         }
@@ -82,6 +108,5 @@ namespace UI_MVP.ChooseName
         [Serializable] private class RandomUserResponse { public RandomUser[] results; }
         [Serializable] private class RandomUser { public Login login; }
         [Serializable] private class Login { public string username; }
-    
     }
 }

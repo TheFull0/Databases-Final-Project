@@ -60,4 +60,15 @@ namespace Events
     {
         public string StatusText;
     }
+    
+    // Raised once the player has successfully confirmed their display name.
+    public struct ChooseNameConfirmedEvent
+    {
+        public string ConfirmedName;
+ 
+        public ChooseNameConfirmedEvent(string confirmedName)
+        {
+            ConfirmedName = confirmedName;
+        }
+    }
 }
