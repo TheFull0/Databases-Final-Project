@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Events;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -27,18 +28,16 @@ public class UIManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(this.gameObject);
-        
+
+        SubscribeSelfToEvents();
         RegisterScreens();
         SubscribePresenters();
         SetStartupScreen();
     }
 
-    private void OnDestroy()
+    private void OnGameStarted(GameStartedEvent obj)
     {
-        foreach (var registration in _screens.Values)
-        {
-            registration.Presenter.UnSubscribeToEvents();
-        }
+        SetCurrentScreen(UIScreenId.InGame);
     }
 
     private void RegisterScreens()
@@ -118,5 +117,24 @@ public class UIManager : MonoBehaviour
     public void ChangeUI(UIScreenId screenId)
     {
         SetCurrentScreen(screenId);
+    }
+    
+    private void SubscribeSelfToEvents()
+    {
+        EventBus.Subscribe<GameStartedEvent>(OnGameStarted);
+    }
+    
+    private void OnDestroy()
+    {
+        UnsubscribeSelf();
+        foreach (var registration in _screens.Values)
+        {
+            registration.Presenter.UnSubscribeToEvents();
+        }
+    }
+
+    private void UnsubscribeSelf()
+    {
+        EventBus.Unsubscribe<GameStartedEvent>(OnGameStarted);
     }
 }

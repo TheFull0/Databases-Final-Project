@@ -51,7 +51,7 @@ namespace UI.InGame
 
         private void OnGameStarted(GameStartedEvent _)
         {
-            if (UIManager.Instance == null)
+            if (!UIManager.Instance)
             {
                 Debug.LogError("[InGameUIPresenter] UIManager instance is unavailable.");
                 return;
