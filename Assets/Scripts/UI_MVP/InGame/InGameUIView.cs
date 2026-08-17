@@ -1,5 +1,6 @@
 using System;
 using Base_Classes;
+using Game_Logic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -11,13 +12,26 @@ namespace UI.InGame
         public event Action OnConfirmClicked;
 
         private Label _questionTextLabel;
+        private ProgressBar _timerProgressBar;
+        private VisualElement _timerProgressFill;
         private Button _answer1Button;
         private Button _answer2Button;
         private Button _answer3Button;
         private Button _answer4Button;
         private Button _confirmButton;
+        private StopWatch _stopWatch;
+        private bool _missingStopWatchLogged;
 
         private bool _callbacksRegistered;
+
+        private static readonly Color TimerSafeColor = new Color(0.20f, 0.75f, 0.20f, 0.95f);
+        private static readonly Color TimerWarningColor = new Color(0.95f, 0.80f, 0.20f, 0.95f);
+        private static readonly Color TimerDangerColor = new Color(0.90f, 0.25f, 0.25f, 0.95f);
+
+        private void Update()
+        {
+            UpdateTimerVisuals();
+        }
 
         private void OnDisable()
         {
@@ -32,10 +46,12 @@ namespace UI.InGame
             SetAnswerTexts(model.AnswerOptions);
             VisualizeSelectionAndFeedback(model);
             SetConfirmButtonState(model);
+            UpdateTimerVisuals();
         }
 
         protected override void OnInitializeUI()
         {
+            _timerProgressBar = Root.Q<ProgressBar>(UI_In_Game.TimerPB);
             _questionTextLabel = Root.Q<Label>(UI_In_Game.QuestionTXT);
 
             _answer1Button = Root.Q<Button>(UI_In_Game.Answer1BTN);
@@ -43,6 +59,14 @@ namespace UI.InGame
             _answer3Button = Root.Q<Button>(UI_In_Game.Answer3BTN);
             _answer4Button = Root.Q<Button>(UI_In_Game.Answer4BT);
             _confirmButton = Root.Q<Button>(UI_In_Game.ConfirmBTN);
+
+            if (_timerProgressBar != null)
+            {
+                _timerProgressBar.lowValue = 0f;
+                _timerProgressBar.highValue = 1f;
+                _timerProgressFill = _timerProgressBar.Q(className: "unity-progress-bar__progress");
+                SetTimerDisplay(1f, 0f);
+            }
 
             RegisterCallbacks();
         }
@@ -163,6 +187,52 @@ namespace UI.InGame
             }
 
             _confirmButton.SetEnabled(model.CanConfirm);
+        }
+
+        private void UpdateTimerVisuals()
+        {
+            if (_timerProgressBar == null) return;
+            if (!TryGetStopWatch(out var stopWatch)) return;
+
+            var normalizedRemaining = stopWatch.RemainingNormalized;
+            SetTimerDisplay(normalizedRemaining, stopWatch.RemainingTime);
+        }
+
+        private bool TryGetStopWatch(out StopWatch stopWatch)
+        {
+            if (_stopWatch == null)
+            {
+                _stopWatch = FindAnyObjectByType<StopWatch>();
+                if (_stopWatch == null && !_missingStopWatchLogged)
+                {
+                    Debug.LogError("[InGameUIView] StopWatch reference not found for timer progress bar.");
+                    _missingStopWatchLogged = true;
+                }
+            }
+
+            stopWatch = _stopWatch;
+            return stopWatch != null;
+        }
+
+        private void SetTimerDisplay(float normalizedRemaining, float remainingSeconds)
+        {
+            var clamped = Mathf.Clamp01(normalizedRemaining);
+            _timerProgressBar.value = clamped;
+            _timerProgressBar.title = $"Time: {FormatRemainingTime(remainingSeconds)}";
+
+            if (_timerProgressFill == null) return;
+
+            _timerProgressFill.style.backgroundColor = clamped > 0.66f
+                ? TimerSafeColor
+                : (clamped > 0.33f ? TimerWarningColor : TimerDangerColor);
+        }
+
+        private static string FormatRemainingTime(float remainingSeconds)
+        {
+            var safeSeconds = Mathf.Max(0, Mathf.CeilToInt(remainingSeconds));
+            var minutes = safeSeconds / 60;
+            var seconds = safeSeconds % 60;
+            return $"{minutes:00}:{seconds:00}";
         }
 
         private void ResetButtonColors()

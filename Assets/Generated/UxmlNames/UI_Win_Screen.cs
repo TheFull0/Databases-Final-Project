@@ -1,6 +1,6 @@
 // AUTO-GENERATED — DO NOT EDIT
 // Source : Assets/UI Toolkit/UXMLs/Win_Screen.uxml
-// Updated: 2026-08-17 17:08 UTC
+// Updated: 2026-08-17 22:28 UTC
 
 using System.Collections.Generic;
 

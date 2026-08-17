@@ -147,7 +147,16 @@ namespace Managers
         
         private void OnTimerFinished(TimerFinishedEvent e)
         {
+            StartCoroutine(OnQuestionUnansweredRoutine());
+        }
+        
+        private IEnumerator OnQuestionUnansweredRoutine()
+        {
             EventBus.Raise(new QuestionUnansweredEvent { AnswerIndex = _currentQuestion.CorrectAnswerIndex });
+
+            yield return new WaitForSeconds(gameData.WaitBetweenQuestions); // Wait for x seconds before loading the next question
+            
+            LoadNextQuestion();
         }
 
         private async void EndGame()

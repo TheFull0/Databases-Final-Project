@@ -51,6 +51,8 @@ namespace Events
     public struct MainMenuQueueUpClickedEvent { }
 
     public struct MainMenuQueueCanceledEvent { }
+    
+    public struct WinScreenMainMenuClickedEvent { }
 
     public struct MainMenuCreditsClickedEvent { }
 

@@ -11,6 +11,10 @@ namespace Game_Logic
         
         private bool _isRunning;
         public bool IsRunning => _isRunning;
+        public float MaxTime => _maxTime;
+        public float ElapsedTime => _currentTime;
+        public float RemainingTime => Mathf.Max(0f, _maxTime - _currentTime);
+        public float RemainingNormalized => _maxTime <= 0f ? 0f : Mathf.Clamp01(RemainingTime / _maxTime);
 
         public void Update()
         {

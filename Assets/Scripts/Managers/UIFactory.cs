@@ -5,6 +5,7 @@ using UI_MVP.ChooseName;
 using UI_MVP.ChooseName.UI_MVP.ChooseName;
 using UI.InGame;
 using UI.MainMenu;
+using UI.WinScreen;
 using UnityEngine;
 
 // Stable screen identity used by UIManager runtime navigation APIs.
@@ -12,14 +13,16 @@ public enum UIScreenId
 {
     MainMenu,
     InGame,
-    ChooseName
+    ChooseName,
+    WinScreen
 }
 
 public enum UIPresenterType
 {
     MainMenu,
     InGame,
-    ChooseName
+    ChooseName,
+    WinScreen
 }
 
 [Serializable]
@@ -55,8 +58,11 @@ public static class UIFactory
         {
             { UIPresenterType.MainMenu, CreateMainMenuPresenter },
             { UIPresenterType.InGame, CreateInGamePresenter },
-            { UIPresenterType.ChooseName, CreateChooseNamePresenter}
+            { UIPresenterType.ChooseName, CreateChooseNamePresenter},
+            { UIPresenterType.WinScreen, CreateWinScreenPresenter}
         };
+
+    
 
 
     public static List<UIScreenRegistration> CreateRegistrations(IEnumerable<UIPresenterBinding> bindings)
@@ -121,7 +127,7 @@ public static class UIFactory
         var chooseNameView = binding.View as ChooseNameUIView;
         if (!chooseNameView)
         {
-            Debug.LogError("[UIFactory] InGame presenter requires InGameUIView.");
+            Debug.LogError("[UIFactory] ChooseName presenter requires ChooseNameUIView.");
             return null;
         }
 
@@ -130,4 +136,20 @@ public static class UIFactory
             chooseNameView
         );
     }
+    
+    private static IPresenter CreateWinScreenPresenter(UIPresenterBinding binding)
+    {
+        var winScreenView = binding.View as WinScreenUIView;
+        if (!winScreenView)
+        {
+            Debug.LogError("[UIFactory] WinScreen presenter requires WinScreenUIView.");
+            return null;
+        }
+
+        return new WinScreenUIPresenter(
+            new WinScreenUIModel(),
+            winScreenView
+        );
+    }
+    
 }

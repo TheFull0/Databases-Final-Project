@@ -124,6 +124,7 @@ public class UIManager : MonoBehaviour
     {
         EventBus.Subscribe<GameStartedEvent>(OnGameStarted);
         EventBus.Subscribe<ChooseNameConfirmedEvent>(OnConfirmedName);
+        EventBus.Subscribe<WinScreenMainMenuClickedEvent>(OnWinScreenMainMenuClicked);
     }
 
     private void OnConfirmedName(ChooseNameConfirmedEvent obj)
@@ -143,5 +144,12 @@ public class UIManager : MonoBehaviour
     private void UnsubscribeSelf()
     {
         EventBus.Unsubscribe<GameStartedEvent>(OnGameStarted);
+        EventBus.Unsubscribe<ChooseNameConfirmedEvent>(OnConfirmedName);
+        EventBus.Unsubscribe<WinScreenMainMenuClickedEvent>(OnWinScreenMainMenuClicked);
+    }
+
+    private void OnWinScreenMainMenuClicked(WinScreenMainMenuClickedEvent _)
+    {
+        SetCurrentScreen(UIScreenId.MainMenu);
     }
 }
