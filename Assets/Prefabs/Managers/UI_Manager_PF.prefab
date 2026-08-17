@@ -33,6 +33,7 @@ Transform:
   - {fileID: 7399169221882424659}
   - {fileID: 4232724329903798209}
   - {fileID: 6897300463378933308}
+  - {fileID: 2007327207198847491}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6184594488881785434
@@ -60,6 +61,10 @@ MonoBehaviour:
     PresenterType: 2
     View: {fileID: 4970294034372228691}
     ShowOnStartup: 1
+  - ScreenId: 3
+    PresenterType: 3
+    View: {fileID: 6905139829593048892}
+    ShowOnStartup: 0
 --- !u!1001 &5994414857213399448
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -133,6 +138,79 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 903062674782418852, guid: 90c694aee263a754cbd31747433e6e84, type: 3}
   m_PrefabInstance: {fileID: 5994414857213399448}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7417879573760806392
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1042811918187745712}
+    m_Modifications:
+    - target: {fileID: 3103830844338327050, guid: dd96618f2d0374f48b785693d41c0bbd, type: 3}
+      propertyPath: m_Name
+      value: Win_Screen_PF
+      objectReference: {fileID: 0}
+    - target: {fileID: 9019284391200030715, guid: dd96618f2d0374f48b785693d41c0bbd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9019284391200030715, guid: dd96618f2d0374f48b785693d41c0bbd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9019284391200030715, guid: dd96618f2d0374f48b785693d41c0bbd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9019284391200030715, guid: dd96618f2d0374f48b785693d41c0bbd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9019284391200030715, guid: dd96618f2d0374f48b785693d41c0bbd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9019284391200030715, guid: dd96618f2d0374f48b785693d41c0bbd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9019284391200030715, guid: dd96618f2d0374f48b785693d41c0bbd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9019284391200030715, guid: dd96618f2d0374f48b785693d41c0bbd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9019284391200030715, guid: dd96618f2d0374f48b785693d41c0bbd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9019284391200030715, guid: dd96618f2d0374f48b785693d41c0bbd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: dd96618f2d0374f48b785693d41c0bbd, type: 3}
+--- !u!4 &2007327207198847491 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9019284391200030715, guid: dd96618f2d0374f48b785693d41c0bbd, type: 3}
+  m_PrefabInstance: {fileID: 7417879573760806392}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6905139829593048892 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4116965420473780932, guid: dd96618f2d0374f48b785693d41c0bbd, type: 3}
+  m_PrefabInstance: {fileID: 7417879573760806392}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c302f1bae887604db7fb3b0fd5017db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI.WinScreen.WinScreenUIView
 --- !u!1001 &7839518514312098362
 PrefabInstance:
   m_ObjectHideFlags: 0
