@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Events;
 using Managers;
 using UnityEngine;
@@ -6,10 +7,14 @@ namespace BootStraps
 {
     public class QueueManager : MonoBehaviour
     {
+        [SerializeField] private QueueManager Instance;
         [SerializeField] private GameManager gameManagerPrefab;
         private GameManager _gameManagerInstance;
         private bool _initialized;
+        
+        private HashSet<string> _queueNames;
 
+        
         private void Awake()
         {
             EventBus.Subscribe<MainMenuQueueUpClickedEvent>(HandleMainMenuQueueUpClicked);

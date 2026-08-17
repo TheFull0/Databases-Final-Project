@@ -27,7 +27,7 @@ namespace Managers
         
         public bool IsAbortable { get; private set; }
 
-        private async void Awake()
+        private async void Run(string playerName)
         {
             _matchmakingCancellationTokenSource = new CancellationTokenSource();
             var matchmakingToken = _matchmakingCancellationTokenSource.Token;
@@ -36,11 +36,7 @@ namespace Managers
             try
             {
                 SubscribeToEvents();
-            
-                //TODO Make a name-entry UI and raise some event or add it straight to gamemanager and read the value when submit clicked or something
-                const string playerName = "kushi";
-             
-                //TODO raise some "waiting for opponent" UI event here or show it straight from uimanager
+                
                 await ServerFunctions.JoinAndWaitForOpponent(playerName, matchmakingToken);
 
                 if (matchmakingToken.IsCancellationRequested)
@@ -74,6 +70,7 @@ namespace Managers
         private void StartGame()
         {
             IsAbortable = false;
+            
             LoadNextQuestion();
         }
 
