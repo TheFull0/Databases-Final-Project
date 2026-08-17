@@ -19,6 +19,15 @@ namespace BootStraps
             EventBus.Subscribe<MainMenuQueueUpClickedEvent>(HandleMainMenuQueueUpClicked);
             EventBus.Subscribe<MainMenuQueueCanceledEvent>(HandleMainMenuQueueCanceled);
             EventBus.Subscribe<ChooseNameConfirmedEvent>(OnNameChosen);
+            EventBus.Subscribe<MatchEndedEvent>(HandleGameFinished);
+        }
+
+        private void HandleGameFinished(MatchEndedEvent e)
+        {
+            if (!_gameManagerInstance || !_initialized) return;
+            Destroy(_gameManagerInstance.gameObject);
+            _gameManagerInstance = null;
+            _initialized = false;
         }
 
         private void OnNameChosen(ChooseNameConfirmedEvent e)
@@ -52,6 +61,7 @@ namespace BootStraps
             EventBus.Unsubscribe<MainMenuQueueUpClickedEvent>(HandleMainMenuQueueUpClicked);
             EventBus.Unsubscribe<MainMenuQueueCanceledEvent>(HandleMainMenuQueueCanceled);
             EventBus.Unsubscribe<ChooseNameConfirmedEvent>(OnNameChosen);
+            EventBus.Unsubscribe<MatchEndedEvent>(HandleGameFinished);
         }
     }
 }

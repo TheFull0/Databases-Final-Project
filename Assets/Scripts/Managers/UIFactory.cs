@@ -61,9 +61,7 @@ public static class UIFactory
             { UIPresenterType.ChooseName, CreateChooseNamePresenter},
             { UIPresenterType.WinScreen, CreateWinScreenPresenter}
         };
-
     
-
 
     public static List<UIScreenRegistration> CreateRegistrations(IEnumerable<UIPresenterBinding> bindings)
     {
