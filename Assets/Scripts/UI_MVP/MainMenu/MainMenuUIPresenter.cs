@@ -63,7 +63,7 @@ namespace UI.MainMenu
         {
             // Main menu starts with the queue panel hidden.
             _model.SetQueueVisible(false);
-            RefreshPlayerIdentityFromCaches();
+            _ = RefreshPlayerIdentityFromCaches();
             _view.Render(_model);
         }
 
@@ -130,11 +130,9 @@ namespace UI.MainMenu
             
             await ServerFunctions.RefreshMyProfile();
 
-            if (ServerFunctions.PlayerId > 0 &&
-                ServerFunctions.MyElo > 0 &&
-                !string.IsNullOrWhiteSpace(cachedName))
+            if (ServerFunctions.MyElo >= 0)
             {
-                _model.SetPlayerStatsText($"{ServerFunctions.PlayerId}\n{cachedName} - {ServerFunctions.MyElo}");
+                _model.SetPlayerStatsText($"{ServerFunctions.CachedID}\n{cachedName} - {ServerFunctions.MyElo}");
             }
             else
             {

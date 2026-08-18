@@ -19,6 +19,7 @@ namespace Managers
         // Set once JoinAndWaitForOpponent completes - the UI reads these to
         // show the matchmaking / result screens.
         public static int PlayerId { get; private set; }
+        public static string CachedID { get; private set; }
         public static int MatchId { get; private set; }
         public static int MyElo { get; private set; }
         public static string OpponentName { get; private set; } = "";
@@ -206,6 +207,7 @@ namespace Managers
             }
 
             var profile = JsonUtility.FromJson<PlayerProfileDto>(req.downloadHandler.text);
+            CachedID = cachedId;
             MyElo = profile.elo;
         }
 
