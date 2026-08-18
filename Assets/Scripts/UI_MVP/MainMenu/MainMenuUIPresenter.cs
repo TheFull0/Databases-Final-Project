@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Base_Classes;
 using BootStraps;
 using Events;
@@ -104,9 +105,9 @@ namespace UI.MainMenu
             _view.Render(_model);
         }
 
-        private void OnPlayerNameUpdated(MainMenuPlayerNameUpdatedEvent e)
+        private async void OnPlayerNameUpdated(MainMenuPlayerNameUpdatedEvent e)
         {
-            RefreshPlayerIdentityFromCaches();
+            await RefreshPlayerIdentityFromCaches();
             _view.Render(_model);
         }
 
@@ -116,26 +117,24 @@ namespace UI.MainMenu
             _view.Render(_model);
         }
 
-        private void OnChooseNameConfirmed(ChooseNameConfirmedEvent _)
+        private async void OnChooseNameConfirmed(ChooseNameConfirmedEvent _)
         {
-            RefreshPlayerIdentityFromCaches();
+            await RefreshPlayerIdentityFromCaches();
             _view.Render(_model);
         }
 
-        private void RefreshPlayerIdentityFromCaches()
+        private async Task RefreshPlayerIdentityFromCaches()
         {
-            var cachedName = QueueManager.Instance != null ? QueueManager.Instance.PlayerName : string.Empty;
+            var cachedName = QueueManager.Instance ? QueueManager.Instance.PlayerName : string.Empty;
             _model.SetPlayerName(cachedName);
+            
+            await ServerFunctions.RefreshMyProfile();
 
             if (ServerFunctions.PlayerId > 0 &&
                 ServerFunctions.MyElo > 0 &&
                 !string.IsNullOrWhiteSpace(cachedName))
             {
                 _model.SetPlayerStatsText($"{ServerFunctions.PlayerId} - {cachedName} - {ServerFunctions.MyElo}");
-            }
-            else
-            {
-                _model.SetPlayerStatsText("Loading stats...");
             }
         }
     }

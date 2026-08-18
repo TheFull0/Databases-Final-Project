@@ -5,7 +5,7 @@
             <ui:Button text="Queue Up" name="QueueUpBTN" style="width: 75%; height: auto; align-self: center;"/>
             <ui:Button text="Credits" name="CreditsBTN" style="width: 75%; align-self: center;"/>
             <ui:Button text="Quit" name="QuitBTN" style="width: 75%; align-items: stretch; align-self: center;"/>
-            <ui:Label text="Label" name="PlayerStatsTXT" style="-unity-text-align: upper-center; font-size: 40px;"/>
+            <ui:Label text="Loading Stats..." name="PlayerStatsTXT" style="-unity-text-align: upper-center; font-size: 40px;"/>
         </ui:VisualElement>
         <ui:VisualElement name="QueueScreen" style="flex-grow: 1; width: 50%; flex-shrink: 1; padding-top: 100px; padding-bottom: 100px; padding-left: 50px; padding-right: 50px; max-width: 50%;">
             <ui:VisualElement name="LoadingWheel" style="flex-grow: 1; flex-direction: column; flex-shrink: 1; align-items: center; justify-content: center;">
