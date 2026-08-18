@@ -134,7 +134,11 @@ namespace UI.MainMenu
                 ServerFunctions.MyElo > 0 &&
                 !string.IsNullOrWhiteSpace(cachedName))
             {
-                _model.SetPlayerStatsText($"{ServerFunctions.PlayerId} - {cachedName} - {ServerFunctions.MyElo}");
+                _model.SetPlayerStatsText($"{ServerFunctions.PlayerId}\n{cachedName} - {ServerFunctions.MyElo}");
+            }
+            else
+            {
+                _model.SetPlayerStatsText("Couldn't Fetch Stats!");
             }
         }
     }
