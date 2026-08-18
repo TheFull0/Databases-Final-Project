@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcd06c7303f241d882641a15fd0dfdbb, type: 3}
   m_Name: Game_Data
   m_EditorClassIdentifier: Assembly-CSharp::ScriptableObjects.Classes.GameDataSO
-  questionCount: 10
+  questionCount: 5
   timePerQuestion: 10
-  waitBetweenQuestions: 3
+  waitBetweenQuestions: 1.5

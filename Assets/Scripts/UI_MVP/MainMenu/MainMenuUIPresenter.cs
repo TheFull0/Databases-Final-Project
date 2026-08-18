@@ -37,6 +37,7 @@ namespace UI.MainMenu
             EventBus.Subscribe<GameStartedEvent>(HideQueueWindow);
             EventBus.Subscribe<MainMenuQueueStatusUpdatedEvent>(OnQueueStatusUpdated);
             EventBus.Subscribe<ChooseNameConfirmedEvent>(OnChooseNameConfirmed);
+            EventBus.Subscribe<MatchEndedEvent>(OnChooseNameConfirmed);
 
             _isSubscribed = true;
             InitializeView();
@@ -58,8 +59,10 @@ namespace UI.MainMenu
             _view.OnQuitClicked -= HandleQuitClicked;
 
             EventBus.Unsubscribe<MainMenuQueueStateChangedEvent>(OnQueueStateChanged);
+            EventBus.Unsubscribe<GameStartedEvent>(HideQueueWindow);
             EventBus.Unsubscribe<MainMenuQueueStatusUpdatedEvent>(OnQueueStatusUpdated);
             EventBus.Unsubscribe<ChooseNameConfirmedEvent>(OnChooseNameConfirmed);
+            EventBus.Unsubscribe<MatchEndedEvent>(OnChooseNameConfirmed);
 
             _isSubscribed = false;
         }
@@ -116,7 +119,7 @@ namespace UI.MainMenu
             _view.Render(_model);
         }
 
-        private async void OnChooseNameConfirmed(ChooseNameConfirmedEvent _)
+        private async void OnChooseNameConfirmed<T>(T _)
         {
             await RefreshPlayerIdentityFromCaches();
             _view.Render(_model);
