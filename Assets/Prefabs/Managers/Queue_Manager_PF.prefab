@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caccf44b8a6c4a818dca6ef11ead147f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BootStraps.QueueManager
-  gameManagerPrefab: {fileID: 0}
+  gameManagerPrefab: {fileID: -1434014229362630403, guid: 5bb5264cd8dd7934bbca96975168b3e2, type: 3}

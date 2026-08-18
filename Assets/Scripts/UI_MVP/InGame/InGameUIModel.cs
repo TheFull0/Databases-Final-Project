@@ -17,6 +17,7 @@ namespace UI.InGame
         public string[] AnswerOptions { get; } = new string[4] { string.Empty, string.Empty, string.Empty, string.Empty };
         public int SelectedAnswerIndex { get; private set; } = -1;
         public int CorrectAnswerIndex { get; private set; } = -1;
+        public bool IsGameActive { get; private set; }
         public bool IsInputLocked { get; private set; }
         public InGameAnswerFeedbackState FeedbackState { get; private set; } = InGameAnswerFeedbackState.None;
 
@@ -41,6 +42,16 @@ namespace UI.InGame
             CorrectAnswerIndex = -1;
             FeedbackState = InGameAnswerFeedbackState.None;
             IsInputLocked = false;
+        }
+
+        public void StartGameSession()
+        {
+            IsGameActive = true;
+        }
+
+        public void EndGameSession()
+        {
+            IsGameActive = false;
         }
 
         public void SelectAnswer(int answerIndex)

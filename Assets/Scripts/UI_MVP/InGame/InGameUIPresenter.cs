@@ -24,12 +24,19 @@ namespace UI.InGame
             _view.OnConfirmClicked += HandleConfirmClicked;
 
             EventBus.Subscribe<GameStartedEvent>(OnGameStarted);
+            EventBus.Subscribe<MatchEndedEvent>(OnMatchEnded);
             EventBus.Subscribe<NewQuestionLoadedEvent>(OnNewQuestionLoaded);
             EventBus.Subscribe<QuestionAnsweredCorrectlyEvent>(OnQuestionAnsweredCorrectly);
             EventBus.Subscribe<QuestionAnsweredIncorrectlyEvent>(OnQuestionAnsweredIncorrectly);
             EventBus.Subscribe<QuestionUnansweredEvent>(OnQuestionUnanswered);
 
             _isSubscribed = true;
+            _view.Render(_model);
+        }
+
+        private void OnMatchEnded(MatchEndedEvent _)
+        {
+            _model.EndGameSession();
             _view.Render(_model);
         }
 
@@ -41,6 +48,7 @@ namespace UI.InGame
             _view.OnConfirmClicked -= HandleConfirmClicked;
 
             EventBus.Unsubscribe<GameStartedEvent>(OnGameStarted);
+            EventBus.Unsubscribe<MatchEndedEvent>(OnMatchEnded);
             EventBus.Unsubscribe<NewQuestionLoadedEvent>(OnNewQuestionLoaded);
             EventBus.Unsubscribe<QuestionAnsweredCorrectlyEvent>(OnQuestionAnsweredCorrectly);
             EventBus.Unsubscribe<QuestionAnsweredIncorrectlyEvent>(OnQuestionAnsweredIncorrectly);
@@ -51,6 +59,9 @@ namespace UI.InGame
 
         private void OnGameStarted(GameStartedEvent _)
         {
+            _model.StartGameSession();
+            _view.Render(_model);
+
             if (!UIManager.Instance)
             {
                 Debug.LogError("[InGameUIPresenter] UIManager instance is unavailable.");

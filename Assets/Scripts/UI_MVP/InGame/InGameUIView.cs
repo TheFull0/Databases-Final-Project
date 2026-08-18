@@ -20,6 +20,7 @@ namespace UI.InGame
         private Button _answer4Button;
         private Button _confirmButton;
         private StopWatch _stopWatch;
+        private bool _isGameRunning;
         private bool _missingStopWatchLogged;
 
         private bool _callbacksRegistered;
@@ -42,6 +43,7 @@ namespace UI.InGame
         {
             if (!EnsureInitialized()) return;
 
+            ApplyGameLifecycle(model.IsGameActive);
             SetQuestionText(model.QuestionText);
             SetAnswerTexts(model.AnswerOptions);
             VisualizeSelectionAndFeedback(model);
@@ -192,10 +194,25 @@ namespace UI.InGame
         private void UpdateTimerVisuals()
         {
             if (_timerProgressBar == null) return;
+            if (!_isGameRunning) return;
             if (!TryGetStopWatch(out var stopWatch)) return;
 
             var normalizedRemaining = stopWatch.RemainingNormalized;
             SetTimerDisplay(normalizedRemaining, stopWatch.RemainingTime);
+        }
+
+        private void ApplyGameLifecycle(bool isGameActive)
+        {
+            if (_isGameRunning == isGameActive) return;
+
+            _isGameRunning = isGameActive;
+            _stopWatch = null;
+            _missingStopWatchLogged = false;
+
+            if (!_isGameRunning && _timerProgressBar != null)
+            {
+                SetTimerDisplay(1f, 0f);
+            }
         }
 
         private bool TryGetStopWatch(out StopWatch stopWatch)
