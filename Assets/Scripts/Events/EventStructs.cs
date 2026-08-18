@@ -63,10 +63,6 @@ namespace Events
         public bool IsInQueue;
     }
 
-    public struct MainMenuPlayerNameUpdatedEvent
-    {
-        public string PlayerName;
-    }
 
     public struct MainMenuQueueStatusUpdatedEvent
     {

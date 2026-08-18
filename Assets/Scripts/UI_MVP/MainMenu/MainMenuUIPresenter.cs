@@ -34,12 +34,18 @@ namespace UI.MainMenu
             _view.OnQuitClicked += HandleQuitClicked;
 
             EventBus.Subscribe<MainMenuQueueStateChangedEvent>(OnQueueStateChanged);
-            EventBus.Subscribe<MainMenuPlayerNameUpdatedEvent>(OnPlayerNameUpdated);
+            EventBus.Subscribe<GameStartedEvent>(HideQueueWindow);
             EventBus.Subscribe<MainMenuQueueStatusUpdatedEvent>(OnQueueStatusUpdated);
             EventBus.Subscribe<ChooseNameConfirmedEvent>(OnChooseNameConfirmed);
 
             _isSubscribed = true;
             InitializeView();
+        }
+
+        private void HideQueueWindow(GameStartedEvent obj)
+        {
+            _model.SetQueueVisible(false);
+            _view.Render(_model);
         }
 
         public void UnSubscribeToEvents()
@@ -52,7 +58,6 @@ namespace UI.MainMenu
             _view.OnQuitClicked -= HandleQuitClicked;
 
             EventBus.Unsubscribe<MainMenuQueueStateChangedEvent>(OnQueueStateChanged);
-            EventBus.Unsubscribe<MainMenuPlayerNameUpdatedEvent>(OnPlayerNameUpdated);
             EventBus.Unsubscribe<MainMenuQueueStatusUpdatedEvent>(OnQueueStatusUpdated);
             EventBus.Unsubscribe<ChooseNameConfirmedEvent>(OnChooseNameConfirmed);
 
@@ -102,12 +107,6 @@ namespace UI.MainMenu
         private void OnQueueStateChanged(MainMenuQueueStateChangedEvent e)
         {
             _model.SetQueueVisible(e.IsInQueue);
-            _view.Render(_model);
-        }
-
-        private async void OnPlayerNameUpdated(MainMenuPlayerNameUpdatedEvent e)
-        {
-            await RefreshPlayerIdentityFromCaches();
             _view.Render(_model);
         }
 
